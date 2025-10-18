@@ -8,7 +8,16 @@ public class EmployeeUserDatabase {
 
     // constructor
     public EmployeeUserDatabase(String fileName) {
-        this.fileName = fileName;
+        if (fileName == null || fileName.trim().isEmpty()) { // check if the given name is valid
+            System.out.println("File name is incorrect.");
+        } else {
+            this.fileName = fileName;
+        }
+    }
+
+    // getter for file name
+    public String getFileName() {
+        return this.fileName;
     }
 
     // method 1 : store the data in the file in an arrayList
@@ -20,8 +29,8 @@ public class EmployeeUserDatabase {
             reader = new Scanner(file); // variable reader to read from the file
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
-                //create an object from the line and inserting the object into the arrayList
-                insertRecord(createRecordForm(line)); 
+                // create an object from the line and inserting the object into the arrayList
+                insertRecord(createRecordForm(line));
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found, can not read from it.");
@@ -50,43 +59,64 @@ public class EmployeeUserDatabase {
         return this.records;
     }
 
-    //method 4 : search by employee id
-    public boolean contains(String key){
-        ArrayList<EmployeeUser> list = returnAllRecords(); //getting the records
-        for(int i = 0 ; i < list.size(); i ++){
-            if(list.get(i).getEmployeeId().equals(key)) return true;
+    // method 4 : search by employee id
+    public boolean contains(String key) {
+        ArrayList<EmployeeUser> list = returnAllRecords(); // getting the records
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getEmployeeId().equals(key))
+                return true;
         }
         return false;
     }
 
-    //method 5 : given the employee id search and return the employeeUser
-    public EmployeeUser getRecord(String key){
+    // method 5 : given the employee id search and return the employeeUser
+    public EmployeeUser getRecord(String key) {
         ArrayList<EmployeeUser> list = returnAllRecords();
-        for(int i = 0 ; i<list.size(); i++){
-            if(list.get(i).getEmployeeId().equals(key)){
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getEmployeeId().equals(key)) {
                 return list.get(i);
             }
         }
         System.out.println("This employee ID cannot be found.");
         return null;
-        
+
     }
 
-    //method 6 : insert an employeeUser object in the list
-    public void insertRecord(EmployeeUser record){
+    // method 6 : insert an employeeUser object in the list
+    public void insertRecord(EmployeeUser record) {
         this.records.add(record);
     }
 
-    //method 7 : delete the record by its id
-    public void deleteRecord(String key){
-        if(contains(key)){
+    // method 7 : delete the record by its id
+    public void deleteRecord(String key) {
+        if (contains(key)) {
             this.records.remove(getRecord(key));
-        }
-        else{
+        } else {
             System.out.println("Cannot delete, ID is not found.");
         }
     }
 
-    //method 8 : delete the data in the file and insert data in arraylist
-
+    // method 8 : delete the data in the file and insert data in arraylist
+    public void saveToFile() {
+        FileWriter writer = null;
+        ArrayList<EmployeeUser> list = returnAllRecords();
+        try {
+            writer = new FileWriter(getFileName(), false); // opens the file -> delete its content -> start writing
+            for (int i = 0; i < list.size(); i++) {
+                writer.write(list.get(i).lineRepresentation() + "\n"); // line representation is a method in
+                                                                       // EmployeeUser class
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing in the file.");
+        }
+        // In saveToFile() - need proper exception handling for close()
+        finally {
+            try {
+                if (writer != null)
+                    writer.close();
+            } catch (IOException e) {
+                System.out.println("Error closing file: " + e.getMessage());
+            }
+        }
+    }
 }
