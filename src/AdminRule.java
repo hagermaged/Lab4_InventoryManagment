@@ -1,5 +1,8 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
 public class AdminRule {
     private EmployeeUserDatabase database;
 
@@ -27,13 +30,28 @@ public class AdminRule {
         }
     }
 
-    //method 2 : returns an array of employees in the file
-    public EmployeeUser[] getListOfEmployees(){
-        Scanner reader = new Scanner("Employee.txt");
-        EmployeeUserDatabase data = new EmployeeUserDatabase("Employee.txt");
-        String line;
-        while(reader.hasNextLine()){
-            line = reader.nextLine();
+    // method 2 : returns an array of employees in the file
+    public EmployeeUser[] getListOfEmployees() {
+        Scanner reader = null;
+        ArrayList<EmployeeUser> list = new ArrayList<>();
+
+        try {
+            reader = new Scanner(new File("Employee.txt")); // Fix: scan FILE not string
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                if (!line.trim().isEmpty()) {
+                    list.add(database.createRecordForm(line));
+                }
+            }
+            return list.toArray(new EmployeeUser[0]); // Convert to array and return
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Employee file not found.");
+            return new EmployeeUser[0]; // Return empty array if file doesn't exist
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
         }
     }
 }
