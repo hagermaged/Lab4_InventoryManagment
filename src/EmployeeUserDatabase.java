@@ -24,6 +24,7 @@ public class EmployeeUserDatabase {
     public void readFromFile() {
         File file = null;
         Scanner reader = null;
+        this.records.clear(); //clear the previous records (when calling more than once the records duplicates)
         try {
             file = new File(this.fileName); // opens the file with the name
             reader = new Scanner(file); // variable reader to read from the file

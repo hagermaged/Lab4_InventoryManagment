@@ -13,45 +13,32 @@ public class AdminRule {
 
     // method 1 : adds new employee to a file named Employee.txt
     public void addEmployee(String employeeId, String name, String email, String address, String phoneNumber) {
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter("Employee.txt", true); // true to append
-            EmployeeUser employee = new EmployeeUser(employeeId, name, email, address, phoneNumber);
-            writer.write(employee.lineRepresentation() + "\n");
-        } catch (IOException e) {
-            System.out.println("Can not write in the file.");
-        } finally {
-            try {
-                if (writer != null)
-                    writer.close();
-            } catch (IOException e) {
-                System.out.println("Error closing file: " + e.getMessage());
-            }
-        }
+        EmployeeUser employee = new EmployeeUser(employeeId, name, email, address, phoneNumber);
+        this.database.insertRecord(employee);
+        // logout();
     }
 
     // method 2 : returns an array of employees in the file
     public EmployeeUser[] getListOfEmployees() {
-        Scanner reader = null;
-        ArrayList<EmployeeUser> list = new ArrayList<>();
+        ArrayList<EmployeeUser> records = new ArrayList<>();
+        records = database.returnAllRecords();
+        return records.toArray(new EmployeeUser[0]); //converting the arrayList to an array 
+        //employeeUser[0] making an array of size zero the toArray will increase its size
+    }
 
-        try {
-            reader = new Scanner(new File("Employee.txt")); // Fix: scan FILE not string
-            while (reader.hasNextLine()) {
-                String line = reader.nextLine();
-                if (!line.trim().isEmpty()) {
-                    list.add(database.createRecordForm(line));
-                }
-            }
-            return list.toArray(new EmployeeUser[0]); // Convert to array and return
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Employee file not found.");
-            return new EmployeeUser[0]; // Return empty array if file doesn't exist
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
+    //method 3 : remove employee by id 
+    public void removeEmployee(String key){
+        if(database.contains(key)){ //if the records contains an employee with this id
+            database.deleteRecord(key);
+            // logout(); //save new records to the file
         }
+        else{
+            System.out.println("There's no employee with this id.");
+        }
+    }
+
+    //method 4 : save all the data in file
+    public void logout(){
+    database.saveToFile();
     }
 }
