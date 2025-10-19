@@ -71,7 +71,7 @@ public abstract class Database<T> {
             if (getSearchKey(record).equals(key))
                 return record;
         }
-        System.out.println("This employee ID cannot be found.");
+        System.out.println("This ID cannot be found.");
         return null;
 
     }
