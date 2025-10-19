@@ -56,7 +56,7 @@ public abstract class Database<T> {
     // implemented in subclasses,used in contains
     public abstract String getSearchKey(T record);
 
-    // search in records by the key
+    // method 4 : search in records by the key
     public boolean contains(String key) {
         for (T record : records) {
             if (getSearchKey(record).equals(key))
