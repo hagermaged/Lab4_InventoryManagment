@@ -1,0 +1,7 @@
+P2394,Laptop,Apple,TechSupplier,10,1500.0
+P1001,Laptop,Apple,TechSupplier,5,1500.0
+P1002,Phone,Samsung,GadgetWorld,10,899.99
+P1003,Headphones,Sony,AudioHub,20,199.5
+P3000,dell,original,store,50,20000.0
+P5000,hp,fana,original,40,50000.0
+P6000,oppo,android,original,50,300000.0
