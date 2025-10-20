@@ -1,16 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.mycompany.lab4;
 
 import java.io.*;
 import java.util.*;
 
-/**
- *
- * @author orignal store
- */
 public  class ProductDatabase extends Database<Product> {
 
 
@@ -19,7 +10,7 @@ public  class ProductDatabase extends Database<Product> {
     }
     
 @Override
-public Product createRecordForm(String line)
+public Product createRecordFrom(String line)
 { 
   String [] record = line.split(",");
   if(record.length !=6)
