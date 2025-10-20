@@ -1,21 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.mycompany.lab4;
+import java.util.*;
+import java.io.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-/**
- *
- * @author orignal store
- * @param <T>
- */
 public abstract class Database<T> {
- protected ArrayList<T> records; // T stands for type (determined later)
+    protected ArrayList<T> records; // T stands for type (determined later)
     protected String fileName;
 
     // constructor
@@ -45,7 +32,7 @@ public abstract class Database<T> {
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
                 // create an object from the line and inserting the object into the arrayList
-                insertRecord(createRecordForm(line));
+                insertRecord(createRecordFrom(line));
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found, can not read from it.");
@@ -59,7 +46,7 @@ public abstract class Database<T> {
 
     // method 2 : takes a string line and return an EmpoyeeUser/Product (depends on
     // the child)
-    public abstract T createRecordForm(String line);
+    public abstract T createRecordFrom(String line);
 
     // method 3 : return the records
     public ArrayList<T> returnAllRecords() {
@@ -69,7 +56,7 @@ public abstract class Database<T> {
     // implemented in subclasses,used in contains
     public abstract String getSearchKey(T record);
 
-    // search in records by the key
+    // method 4 : search in records by the key
     public boolean contains(String key) {
         for (T record : records) {
             if (getSearchKey(record).equals(key))
@@ -84,7 +71,7 @@ public abstract class Database<T> {
             if (getSearchKey(record).equals(key))
                 return record;
         }
-        System.out.println("This ID cannot be found.");
+        System.out.println("This employee ID cannot be found.");
         return null;
 
     }
@@ -103,12 +90,11 @@ public abstract class Database<T> {
     public void deleteRecord(String key) {
         if (contains(key)) {
             this.records.remove(getRecord(key));
-            System.out.println("Record Deleted");
         } else {
             System.out.println("Cannot delete, ID is not found.");
         }
     }
 
     // method 8 : delete the data in the file and insert data in arraylist
-    public abstract void saveToFile() ;   
+    public abstract void saveToFile() ;
 }
