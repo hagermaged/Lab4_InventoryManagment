@@ -1,11 +1,11 @@
 import java.io.*;
 import java.util.*;
 
-public class AdminRule {
+public class AdminRole {
     private EmployeeUserDatabase database;
 
     // constructor
-    public AdminRule(EmployeeUserDatabase database) {
+    public AdminRole(EmployeeUserDatabase database) {
         this.database = database;
     }
 

@@ -13,7 +13,7 @@ public class EmployeeUserDatabase extends Database<EmployeeUser> {
     
     // method 2 : takes a string line and return an EmpolyeeUser object 
     @Override
-    public EmployeeUser createRecordForm(String line) {
+    public EmployeeUser createRecordFrom(String line) {
         //checking if the line is empty
         if (line == null || line.trim().isEmpty()) {
             System.out.println("Line is empty.");
@@ -39,6 +39,7 @@ public class EmployeeUserDatabase extends Database<EmployeeUser> {
     // method 3 : return the records - from Database
 
     //method getSearchKey to return the id of a given EmployeeUser
+    @Override
     public String getSearchKey(EmployeeUser employee){
         return employee.getSearchKey();
     }
