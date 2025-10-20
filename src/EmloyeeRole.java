@@ -36,7 +36,7 @@ public class EmloyeeRole {
         return list.toArray(new Product[0]);
     }
 
-    public CustomerProduct[] getListOfPurchasingOperations() {
+     public CustomerProduct[] getListOfPurchasingOperations() {
         ArrayList<CustomerProduct> list = customerProductDatabase.returnAllRecords();
         return list.toArray(new CustomerProduct[0]);
     }
